@@ -38,7 +38,7 @@ def ensure_user(db: Session) -> User:
 
 def apply_metric_update(db: Session, metric: Metric, raw_value: float, transformed_value: float) -> tuple[float, bool]:
     metric.current_value = transformed_value
-    metric.last_polled_at = dt.datetime.utcnow()
+    metric.last_polled_at = dt.datetime.now(dt.timezone.utc)
     db.add(MetricHistory(metric_id=metric.id, raw_value=raw_value, value=transformed_value))
 
     completed_now = False
@@ -47,7 +47,7 @@ def apply_metric_update(db: Session, metric: Metric, raw_value: float, transform
 
     if progress >= 100 and quest.status != "completed":
         quest.status = "completed"
-        quest.completed_at = dt.datetime.utcnow()
+        quest.completed_at = dt.datetime.now(dt.timezone.utc)
         user = ensure_user(db)
         user.total_xp += quest.xp_reward
         user.level = derive_level(user.total_xp)

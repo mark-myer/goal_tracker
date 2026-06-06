@@ -5,9 +5,9 @@ from questlog.crypto import decrypt_value
 from questlog.database import OdooConnection
 
 
-def _replace_me(value, uid):
+def _replace_me_with_uid(value, uid):
     if isinstance(value, list):
-        return [_replace_me(item, uid) for item in value]
+        return [_replace_me_with_uid(item, uid) for item in value]
     if isinstance(value, str) and value == "me":
         return uid
     return value
@@ -62,7 +62,7 @@ def fetch_odoo_metric(
     aggregate: str,
 ) -> float:
     uid, api_key, _common, models = _auth(connection)
-    domain = _replace_me(json.loads(domain_json or "[]"), uid)
+    domain = _replace_me_with_uid(json.loads(domain_json or "[]"), uid)
 
     if aggregate == "count":
         return float(models.execute_kw(connection.db, uid, api_key, model, "search_count", [domain]))

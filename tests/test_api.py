@@ -7,7 +7,8 @@ from questlog.main import app
 client = TestClient(app)
 
 
-def setup_function(_):
+def setup_function(test_function):
+    del test_function
     Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)
 

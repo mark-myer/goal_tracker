@@ -1,15 +1,18 @@
-import base64
-import hashlib
 import os
 
 from cryptography.fernet import Fernet
 
+_generated_key: bytes | None = None
+
 
 def _key() -> bytes:
+    global _generated_key
     configured = os.getenv("ENCRYPTION_KEY")
     if configured:
         return configured.encode()
-    return base64.urlsafe_b64encode(hashlib.sha256(b"questlog-default-key").digest())
+    if _generated_key is None:
+        _generated_key = Fernet.generate_key()
+    return _generated_key
 
 
 def encrypt_value(value: str) -> str:

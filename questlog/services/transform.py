@@ -17,5 +17,5 @@ def apply_transform(raw_value: float, expression: str | None) -> float:
     try:
         result = simple_eval(expression, names={"value": float(raw_value)}, functions=SAFE_FUNCTIONS)
     except Exception as exc:  # noqa: BLE001
-        raise ValueError(f"Invalid transform expression: {exc}") from exc
+        raise ValueError(f"Invalid transform expression '{expression}': {exc}") from exc
     return float(result)

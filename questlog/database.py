@@ -30,7 +30,9 @@ class Quest(Base):
     deadline: Mapped[dt.datetime | None] = mapped_column(DateTime)
     status: Mapped[str] = mapped_column(String, default="active", nullable=False)
     xp_reward: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
-    created_at: Mapped[dt.datetime] = mapped_column(DateTime, default=dt.datetime.utcnow, nullable=False)
+    created_at: Mapped[dt.datetime] = mapped_column(
+        DateTime, default=lambda: dt.datetime.now(dt.timezone.utc), nullable=False
+    )
     completed_at: Mapped[dt.datetime | None] = mapped_column(DateTime)
 
     metrics: Mapped[list["Metric"]] = relationship(back_populates="quest", cascade="all, delete-orphan")
@@ -88,7 +90,9 @@ class MetricHistory(Base):
     metric_id: Mapped[int] = mapped_column(ForeignKey("metrics.id"), nullable=False)
     raw_value: Mapped[float] = mapped_column(Float, nullable=False)
     value: Mapped[float] = mapped_column(Float, nullable=False)
-    recorded_at: Mapped[dt.datetime] = mapped_column(DateTime, default=dt.datetime.utcnow, nullable=False)
+    recorded_at: Mapped[dt.datetime] = mapped_column(
+        DateTime, default=lambda: dt.datetime.now(dt.timezone.utc), nullable=False
+    )
 
     metric: Mapped[Metric] = relationship(back_populates="history")
 
