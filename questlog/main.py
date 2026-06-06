@@ -2,6 +2,7 @@ import asyncio
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from questlog.database import init_db
@@ -29,5 +30,10 @@ app.mount("/static", StaticFiles(directory="questlog/static"), name="static")
 
 
 @app.get("/")
+def index():
+    return FileResponse("questlog/static/index.html")
+
+
+@app.get("/health")
 def health():
     return {"app": "QuestLog", "status": "ok"}
