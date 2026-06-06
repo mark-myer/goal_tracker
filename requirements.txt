@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+sqlalchemy
+apscheduler
+simpleeval
+cryptography
+httpx
+python-dotenv
+pytest
