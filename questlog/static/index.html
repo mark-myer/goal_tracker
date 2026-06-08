@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>QuestLog Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="page-header">
+        <div>
+          <h1>QuestLog</h1>
+          <p>Track goals, level up, and update progress in real time.</p>
+        </div>
+        <button id="refreshButton" class="btn secondary" type="button">Refresh</button>
+      </header>
+
+      <section class="panel stats-panel">
+        <h2>Player Stats</h2>
+        <div id="stats" class="stats-grid">
+          <div class="stat-card"><span>Total XP</span><strong id="statXp">-</strong></div>
+          <div class="stat-card"><span>Level</span><strong id="statLevel">-</strong></div>
+          <div class="stat-card"><span>Streak</span><strong id="statStreak">-</strong></div>
+        </div>
+      </section>
+
+      <section class="panel form-panel">
+        <h2>Create Quest</h2>
+        <form id="createQuestForm" class="quest-form">
+          <div class="field">
+            <label for="questTitle">Title</label>
+            <input id="questTitle" name="title" required maxlength="120" />
+          </div>
+          <div class="field">
+            <label for="questCategory">Category</label>
+            <input id="questCategory" name="category" maxlength="80" />
+          </div>
+          <div class="field">
+            <label for="questXp">XP Reward</label>
+            <input id="questXp" name="xp_reward" type="number" min="0" step="1" value="0" />
+          </div>
+          <div class="field full">
+            <label for="questDescription">Description</label>
+            <textarea id="questDescription" name="description" rows="3"></textarea>
+          </div>
+
+          <h3>Initial Metric (optional)</h3>
+          <div class="field">
+            <label for="metricLabel">Metric Label</label>
+            <input id="metricLabel" name="metric_label" maxlength="120" />
+          </div>
+          <div class="field">
+            <label for="metricTarget">Metric Target</label>
+            <input id="metricTarget" name="metric_target" type="number" min="0" step="any" />
+          </div>
+          <div class="field">
+            <label for="metricUnit">Metric Unit</label>
+            <input id="metricUnit" name="metric_unit" maxlength="20" />
+          </div>
+          <div class="field">
+            <label for="metricCurrent">Initial Value</label>
+            <input id="metricCurrent" name="metric_current" type="number" step="any" value="0" />
+          </div>
+
+          <div class="form-actions full">
+            <button class="btn primary" type="submit">Create Quest</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel">
+        <h2>Quests</h2>
+        <div id="questList" class="quest-list"></div>
+      </section>
+
+      <p id="statusMessage" class="status-message" role="status" aria-live="polite"></p>
+    </main>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
